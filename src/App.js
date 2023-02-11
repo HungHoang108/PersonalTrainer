@@ -1,6 +1,6 @@
 
 import { Routes, Route } from "react-router-dom";
-import Training from "./components/Training";
+import { Training } from "./components/Training";
 import Home from "./pages/Home";
 import SideBar from "./components/SideBar";
 
