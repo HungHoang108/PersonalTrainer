@@ -50,7 +50,7 @@ export default function NewTrainingModal(props) {
       date: moment(input.date).toISOString(),
     };
     await axios
-      .post("http://traineeapp.azurewebsites.net/api/trainings", newTraining)
+      .post("https://traineeapp.azurewebsites.net/api/trainings", newTraining)
       .then(() => props.reloadTraining());
     setOpen(false);
   };

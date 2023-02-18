@@ -46,14 +46,8 @@ export default function NewCustomerModal(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const newTraining = {
-    //   activity: input.activity,
-    //   duration: input.duration,
-    //   customer: `http://traineeapp.azurewebsites.net/api/customers/${input.customerId}`,
-    //   date: moment(input.date).toISOString(),
-    // };
     await axios
-      .post("http://traineeapp.azurewebsites.net/api/customers", input)
+      .post("https://traineeapp.azurewebsites.net/api/customers", input)
       .then(() => props.reloadCustomers());
     setOpen(false);
   };
