@@ -104,7 +104,7 @@ const Training = () => {
   const deleteTraining = () => {
     try {
       axios
-        .delete(`http://traineeapp.azurewebsites.net/api/trainings/${deleteId}`)
+        .delete(`https://traineeapp.azurewebsites.net/api/trainings/${deleteId}`)
         .then(() => getTrainingData());
     } catch (error) {
       console.log(error);

@@ -40,7 +40,7 @@ const CalendarPage = () => {
   const traningEvents = training.map((item) => {
     return {
       id: item.id,
-      title: `${item.activity} / ${item.customer.firstname} ${item.customer.lastname}`,
+      title: item.customer ? `${item.activity} / ${item.customer.firstname} ${item.customer.lastname}` : "null",
       start: new Date(item.date),
       end: moment(item.date).add(item.duration, "minutes"),
       allDay: false,
