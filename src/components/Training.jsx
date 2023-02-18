@@ -9,16 +9,16 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import NewTrainingModal from "./NewTrainingModal";
 
 const Training = () => {
-
-  const dayconvert = dayjs("02/11/2023").format()
-  console.log(dayconvert, "1ssssss")
-  const day1 = dayjs(dayconvert).format("DD MMM YYYY")
-  console.log("day1", day1)
+  const dayconvert = dayjs("2023-06-09").format();
+  // const day1 = dayjs(dayconvert).format("DD MMM YYYY");
+  // console.log(dayconvert)
 
   const [training, setTraining] = useState([]);
-  const [value, setValue] = useState(null);
+  const [modalStatus, setModalStatus] = useState(false);
+
   const columns = [
     {
       field: "customer",
@@ -28,9 +28,11 @@ const Training = () => {
       width: 240,
       editable: true,
       valueGetter: (params) =>
-        `${params.row.customer.firstname || ""} ${
-          params.row.customer.lastname || ""
-        }`,
+        params.row.customer
+          ? `${params.row.customer.firstname || ""} ${
+              params.row.customer.lastname || ""
+            }`
+          : "null",
     },
     {
       field: "duration",
@@ -49,22 +51,27 @@ const Training = () => {
       headerName: "Date",
       width: 220,
       editable: false,
-      // valueGetter: (params) => dayjs(params.row.date).format("DD MMM YYYY"),
-      renderCell: (params) => {
-        return (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-              value={value ? value : dayjs(params.row.date)}
-              onChange={(newValue) => {
-                
-                console.log(newValue.$D)
-                setValue(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
-        );
-      },
+      valueGetter: (params) => dayjs(params.row.date).format("DD MMM YYYY"),
+      // renderCell: (params) => {
+      //   return (
+      //     <LocalizationProvider dateAdapter={AdapterDayjs}>
+      //       <DesktopDatePicker
+      //         value={dayjs(params.row.date)}
+      //         onChange={async (newValue) => {
+      //           const newDate = `${newValue.$M}/${newValue.$D}/${newValue.$y}`;
+      //           const dayconvert = dayjs(newDate).format();
+      //           console.log(params.row.id)
+
+      //           await axios
+      //             .patch(`http://traineeapp.azurewebsites.net/api/trainings/${params.row.id}`, { date: dayconvert })
+      //             .then(() => getTrainingData());
+      //          ;
+      //         }}
+      //         renderInput={(params) => <TextField {...params} />}
+      //       />
+      //     </LocalizationProvider>
+      //   );
+      // },
     },
     {
       field: "actions",
@@ -73,13 +80,7 @@ const Training = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <div>
-            <Button onClick={(e) => deleteTraining(params.id)}>Delete</Button>
-
-            <Button onClick={(e) => console.log(params.id)} variant="contained">
-              Edit
-            </Button>
-          </div>
+          <Button onClick={(e) => deleteTraining(params.id)}>Delete</Button>
         );
       },
     },
@@ -106,14 +107,22 @@ const Training = () => {
     }
   };
 
-  const processRowUpdate = (newRow) => {
-    const updatedRow = { ...newRow, isNew: false };
-    console.log(updatedRow);
-    return updatedRow;
+  // const processRowUpdate = (newRow) => {
+  //   const updatedRow = { ...newRow, isNew: false };
+  //   console.log(updatedRow);
+  //   return updatedRow;
+  // };
+  const AddNewTraining = () => {
+    setModalStatus(!modalStatus);
   };
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
+      <NewTrainingModal />
+      {/* {modalStatus && <NewTrainingModal />}
+      <Button onClick={AddNewTraining} size="small" variant="outlined">
+        Add New Training
+      </Button> */}
       <DataGrid
         rows={training}
         columns={columns}
@@ -121,7 +130,7 @@ const Training = () => {
         rowsPerPageOptions={[5]}
         checkboxSelection
         disableSelectionOnClick
-        processRowUpdate={processRowUpdate}
+        // processRowUpdate={processRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
         components={{ Toolbar: GridToolbar }}
       />
