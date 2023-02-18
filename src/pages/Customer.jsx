@@ -92,7 +92,7 @@ const Customer = () => {
 
   const getCustomerData = async () => {
     const getCustomers = await axios.get(
-      "http://traineeapp.azurewebsites.net/api/customers"
+      "https://traineeapp.azurewebsites.net/api/customers"
     );
     const data = getCustomers.data.content;
     setCustomers(data);
