@@ -7,7 +7,9 @@ import { Button } from "@mui/material";
 import NewCustomerModal from "../components/NewCustomerModal";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { useNavigate } from "react-router-dom";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const Customer = () => {
   const [snackbar, setSnackbar] = useState(null);
@@ -15,7 +17,18 @@ const Customer = () => {
   const [customers, setCustomers] = useState([]);
   const [modalStatus, setModalStatus] = useState(false);
 
-  const nav = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [deleteUrl, setDeleteUrl] = useState(null);
+
+  const handleClickOpen = (url) => {
+    setOpen(true);
+    setDeleteUrl(url);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const columns = [
     {
       field: "firstname",
@@ -65,11 +78,11 @@ const Customer = () => {
       headerName: "Action",
       width: 150,
       sortable: false,
-      renderCell: (params) => {
-        return <Button onClick={() => deleteCustomer(params.row.links[1].href)}>Delete</Button>
-       
-      
-      },
+      renderCell: (params) => (
+        <Button onClick={() => handleClickOpen(params.row.links[1].href)}>
+          Delete
+        </Button>
+      ),
     },
   ];
 
@@ -84,12 +97,13 @@ const Customer = () => {
     const data = getCustomers.data.content;
     setCustomers(data);
   };
-  const deleteCustomer = (url) => {
+  const deleteCustomer = () => {
     try {
-      axios.delete(url).then(() => getCustomerData());
+      axios.delete(deleteUrl).then(() => getCustomerData());
     } catch (error) {
       console.log(error);
     }
+    setOpen(false)
   };
 
   const processRowUpdate = async (newRow) => {
@@ -120,12 +134,27 @@ const Customer = () => {
         experimentalFeatures={{ newEditingApi: true }}
         pageSize={5}
         rowsPerPageOptions={[5]}
-     
         disableSelectionOnClick
         processRowUpdate={processRowUpdate}
         components={{ Toolbar: GridToolbar }}
         onProcessRowUpdateError={handleProcessRowUpdateError}
       />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to delete this customer?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button onClick={deleteCustomer} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
       {/* {!!snackbar && (
         <Snackbar
           open

@@ -4,21 +4,24 @@ import dayjs from "dayjs";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import NewTrainingModal from "../components/NewTrainingModal";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const Training = () => {
-  const dayconvert = dayjs("2023-06-09").format();
-  // const day1 = dayjs(dayconvert).format("DD MMM YYYY");
-  // console.log(dayconvert)
-
   const [training, setTraining] = useState([]);
-  const [modalStatus, setModalStatus] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
+  const handleClickOpen = (id) => {
+    setOpen(true);
+    setDeleteId(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const columns = [
     {
       field: "customer",
@@ -80,7 +83,8 @@ const Training = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Button onClick={(e) => deleteTraining(params.id)}>Delete</Button>
+          // <Button onClick={(e) => deleteTraining(params.id)}>Delete</Button>
+          <Button onClick={() => handleClickOpen(params.id)}>Delete</Button>
         );
       },
     },
@@ -97,18 +101,15 @@ const Training = () => {
     const data = getTraining.data;
     setTraining(data);
   };
-  const deleteTraining = (id) => {
+  const deleteTraining = () => {
     try {
       axios
-        .delete(`http://traineeapp.azurewebsites.net/api/trainings/${id}`)
+        .delete(`http://traineeapp.azurewebsites.net/api/trainings/${deleteId}`)
         .then(() => getTrainingData());
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const AddNewTraining = () => {
-    setModalStatus(!modalStatus);
+    setOpen(false);
   };
 
   return (
@@ -123,6 +124,22 @@ const Training = () => {
         experimentalFeatures={{ newEditingApi: true }}
         components={{ Toolbar: GridToolbar }}
       />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to delete this training?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button onClick={deleteTraining} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

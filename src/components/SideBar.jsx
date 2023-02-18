@@ -90,6 +90,9 @@ export default function SideBar() {
     } else if (text === "Customer") {
       setOpen(false);
       nav("/customer");
+    }else if (text === "Calendar") {
+      setOpen(false);
+      nav("/calendar");
     }
   };
 
@@ -109,7 +112,7 @@ export default function SideBar() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              TRAINIO
+              TRAINIO- Personal Trainer
             </Typography>
           </Toolbar>
         </AppBar>
