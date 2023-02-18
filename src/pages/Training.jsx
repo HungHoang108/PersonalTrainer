@@ -9,7 +9,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import NewTrainingModal from "./NewTrainingModal";
+import NewTrainingModal from "../components/NewTrainingModal";
 
 const Training = () => {
   const dayconvert = dayjs("2023-06-09").format();
@@ -107,30 +107,19 @@ const Training = () => {
     }
   };
 
-  // const processRowUpdate = (newRow) => {
-  //   const updatedRow = { ...newRow, isNew: false };
-  //   console.log(updatedRow);
-  //   return updatedRow;
-  // };
   const AddNewTraining = () => {
     setModalStatus(!modalStatus);
   };
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      <NewTrainingModal />
-      {/* {modalStatus && <NewTrainingModal />}
-      <Button onClick={AddNewTraining} size="small" variant="outlined">
-        Add New Training
-      </Button> */}
+      <NewTrainingModal reloadTraining={getTrainingData} />
       <DataGrid
         rows={training}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        checkboxSelection
         disableSelectionOnClick
-        // processRowUpdate={processRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
         components={{ Toolbar: GridToolbar }}
       />

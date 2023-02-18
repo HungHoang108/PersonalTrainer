@@ -18,7 +18,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { useNavigate } from "react-router-dom";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
@@ -64,7 +63,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
 }));
@@ -84,12 +82,15 @@ export default function SideBar() {
 
   const handleClick = (text) => {
     if (text === "Home") {
+      setOpen(false);
       nav("/");
     } else if (text === "Training") {
+      setOpen(false);
       nav("/training");
     } else if (text === "Customer") {
+      setOpen(false);
       nav("/customer");
-    } 
+    }
   };
 
   return (

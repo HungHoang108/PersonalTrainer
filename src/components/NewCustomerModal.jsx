@@ -19,13 +19,16 @@ const style = {
   p: 4,
 };
 
-export default function NewTrainingModal(props) {
+export default function NewCustomerModal(props) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState({
-    activity: "",
-    duration: 0,
-    customerId: "",
-    date: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: 0,
+    streetaddress: "",
+    postcode: 0,
+    city: "",
   });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,20 +46,20 @@ export default function NewTrainingModal(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newTraining = {
-      activity: input.activity,
-      duration: input.duration,
-      customer: `http://traineeapp.azurewebsites.net/api/customers/${input.customerId}`,
-      date: moment(input.date).toISOString(),
-    };
+    // const newTraining = {
+    //   activity: input.activity,
+    //   duration: input.duration,
+    //   customer: `http://traineeapp.azurewebsites.net/api/customers/${input.customerId}`,
+    //   date: moment(input.date).toISOString(),
+    // };
     await axios
-      .post("http://traineeapp.azurewebsites.net/api/trainings", newTraining)
-      .then(() => props.reloadTraining());
+      .post("http://traineeapp.azurewebsites.net/api/customers", input)
+      .then(() => props.reloadCustomers());
     setOpen(false);
   };
   return (
     <div>
-      <Button onClick={handleOpen}>Add New Traning</Button>
+      <Button onClick={handleOpen}>Add New Customer</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -65,16 +68,15 @@ export default function NewTrainingModal(props) {
       >
         <Box sx={style} component="form" onSubmit={handleSubmit}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            New Training
+            New Customer
           </Typography>
           <TextField
             margin="normal"
             required
             fullWidth
             type="text"
-            id="activity"
-            label="Activity"
-            name="activity"
+            label="First Name"
+            name="firstname"
             autoComplete="text"
             autoFocus
             onChange={handleInput}
@@ -83,10 +85,31 @@ export default function NewTrainingModal(props) {
             margin="normal"
             required
             fullWidth
-            name="duration"
-            label="Duration"
+            type="text"
+            label="Last Name"
+            name="lastname"
+            autoComplete="text"
+            autoFocus
+            onChange={handleInput}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            type="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={handleInput}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="phone"
+            label="Phone"
             type="number"
-            id="duration"
             autoComplete="number"
             onChange={handleInput}
           />
@@ -94,10 +117,20 @@ export default function NewTrainingModal(props) {
             margin="normal"
             required
             fullWidth
-            name="customerId"
-            label="Trainer ID"
+            type="text"
+            label="Street Address"
+            name="streetaddress"
+            autoComplete="text"
+            autoFocus
+            onChange={handleInput}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="postcode"
+            label="Post Code"
             type="number"
-            id="customerId"
             autoComplete="number"
             onChange={handleInput}
           />
@@ -105,10 +138,10 @@ export default function NewTrainingModal(props) {
             margin="normal"
             required
             fullWidth
-            type="date"
-            id="date"
-            name="date"
-            autoComplete="Date"
+            type="text"
+            label="City"
+            name="city"
+            autoComplete="text"
             autoFocus
             onChange={handleInput}
           />
