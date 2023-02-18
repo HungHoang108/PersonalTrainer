@@ -24,8 +24,6 @@ const localizer = dateFnsLocalizer({
 moment.locale();
 
 const CalendarPage = () => {
-const test = moment("2023-02-09T11:05:25.549+00:00").add(10, "minutes")
-console.log(test)
 
   const [training, setTraining] = useState([]);
 

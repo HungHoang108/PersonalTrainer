@@ -4,6 +4,7 @@ import SideBar from "./components/SideBar";
 import Training from "./pages/Training";
 import Customer from "./pages/Customer";
 import CalendarPage from "./pages/Calendar";
+import Statistics from "./pages/Statistics";
 
 import "./App.css";
 
@@ -16,6 +17,8 @@ function App() {
         <Route path="/training" element={<Training />}></Route>
         <Route path="/customer" element={<Customer />}></Route>
         <Route path="/calendar" element={<CalendarPage />}></Route>
+        <Route path="/statistics" element={<Statistics />}></Route>
+
 
       </Routes>
     </div>
