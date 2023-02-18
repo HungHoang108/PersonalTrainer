@@ -87,7 +87,9 @@ export default function SideBar() {
       nav("/");
     } else if (text === "Training") {
       nav("/training");
-    }
+    } else if (text === "Customer") {
+      nav("/customer");
+    } 
   };
 
   return (
