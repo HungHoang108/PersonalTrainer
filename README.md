@@ -12,9 +12,9 @@ Live demo [link](https://trainio.netlify.app/).
 - Track trainers activity on calendar page
 - Statistics chart for each training activity
 
-## Future feature
+## Future features
 - Register, login
-- Create own back end with ASP.NET
+- Create own backend with C# and ASP.NET core API
 
 ## How to start
 
