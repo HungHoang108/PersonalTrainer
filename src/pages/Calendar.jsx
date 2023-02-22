@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useContext } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import moment from "moment";
 import format from "date-fns/format";
@@ -7,6 +6,8 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import enUS from "date-fns/locale/en-US";
+import { TrainingContext } from "../context/TrainingContext";
+
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const locales = {
@@ -23,31 +24,29 @@ const localizer = dateFnsLocalizer({
 moment.locale();
 
 const CalendarPage = () => {
-
-  const [training, setTraining] = useState([]);
-
-  useEffect(() => {
-    getTrainingData();
-  }, []);
-
-  const getTrainingData = async () => {
-    const getTraining = await axios.get(
-      "https://traineeapp.azurewebsites.net/gettrainings"
-    );
-    const data = getTraining.data;
-    setTraining(data);
+  const { training } = useContext(TrainingContext);
+  const formats = {
+    dateFormat: "1",
+    dayHeaderFormat: "2",
+    eventTimeRangeFormat: ({ start, end }) =>
+      `${moment(start).format("h:mm A")} - ${moment(end).format("h:mm A")}`,
   };
   const traningEvents = training.map((item) => {
     return {
       id: item.id,
-      title: item.customer ? `${item.activity} / ${item.customer.firstname} ${item.customer.lastname}` : "null",
+      title: item.customer
+        ? `${item.activity} / ${item.customer.firstname} ${item.customer.lastname}`
+        : "null",
       start: new Date(item.date),
-      end: moment(item.date).add(item.duration, "minutes"),
+      end: new Date(moment(item.date).add(item.duration, "minutes")),
       allDay: false,
     };
   });
   return (
     <Calendar
+      // titleAccessor={"hello"}
+      
+      formats={formats}
       localizer={localizer}
       events={traningEvents}
       startAccessor="start"

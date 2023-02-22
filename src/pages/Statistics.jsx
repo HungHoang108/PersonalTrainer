@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useContext } from "react";
+import _ from "lodash";
 import {
   Tooltip,
   BarChart,
@@ -9,22 +9,11 @@ import {
   CartesianGrid,
   Bar,
 } from "recharts";
-import _ from "lodash";
+
+import { TrainingContext } from "../context/TrainingContext";
 
 const Statistics = () => {
-  const [training, setTraining] = useState([]);
-
-  useEffect(() => {
-    getTrainingData();
-  }, []);
-
-  const getTrainingData = async () => {
-    const getTraining = await axios.get(
-      "https://traineeapp.azurewebsites.net/gettrainings"
-    );
-    const data = getTraining.data;
-    setTraining(data);
-  };
+  const { training } = useContext(TrainingContext);
 
   const groupedActivities = _.groupBy(training, "activity");
   const groupsArray = _.map(groupedActivities, (groupedActivity, key) => ({

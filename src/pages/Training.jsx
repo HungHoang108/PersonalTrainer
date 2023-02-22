@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -8,9 +8,11 @@ import NewTrainingModal from "../components/NewTrainingModal";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import { TrainingContext } from "../context/TrainingContext";
 
 const Training = () => {
-  const [training, setTraining] = useState([]);
+  const { training, getTrainingData } = useContext(TrainingContext);
+
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
@@ -83,28 +85,18 @@ const Training = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          // <Button onClick={(e) => deleteTraining(params.id)}>Delete</Button>
           <Button onClick={() => handleClickOpen(params.id)}>Delete</Button>
         );
       },
     },
   ];
 
-  useEffect(() => {
-    getTrainingData();
-  }, []);
-
-  const getTrainingData = async () => {
-    const getTraining = await axios.get(
-      "https://traineeapp.azurewebsites.net/gettrainings"
-    );
-    const data = getTraining.data;
-    setTraining(data);
-  };
   const deleteTraining = () => {
     try {
       axios
-        .delete(`https://traineeapp.azurewebsites.net/api/trainings/${deleteId}`)
+        .delete(
+          `https://traineeapp.azurewebsites.net/api/trainings/${deleteId}`
+        )
         .then(() => getTrainingData());
     } catch (error) {
       console.log(error);
