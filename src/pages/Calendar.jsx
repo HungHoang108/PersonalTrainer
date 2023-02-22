@@ -25,12 +25,12 @@ moment.locale();
 
 const CalendarPage = () => {
   const { training } = useContext(TrainingContext);
-  const formats = {
-    dateFormat: "1",
-    dayHeaderFormat: "2",
-    eventTimeRangeFormat: ({ start, end }) =>
-      `${moment(start).format("h:mm A")} - ${moment(end).format("h:mm A")}`,
-  };
+  // const formats = {
+  //   dateFormat: "1",
+  //   dayHeaderFormat: "2",
+  //   eventTimeRangeFormat: ({ start, end }) =>
+  //     `${moment(start).format("h:mm A")} - ${moment(end).format("h:mm A")}`,
+  // };
   const traningEvents = training.map((item) => {
     return {
       id: item.id,
@@ -45,8 +45,7 @@ const CalendarPage = () => {
   return (
     <Calendar
       // titleAccessor={"hello"}
-      
-      formats={formats}
+      // formats={formats}
       localizer={localizer}
       events={traningEvents}
       startAccessor="start"
