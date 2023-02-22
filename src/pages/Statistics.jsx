@@ -9,15 +9,9 @@ import {
   CartesianGrid,
   Bar,
 } from "recharts";
+import _ from "lodash";
 
 const Statistics = () => {
-  const data = [
-    { name: "Gym training", Activity: 0 },
-    { name: "Zumba", Activity: 0 },
-    { name: "Jogging", Activity: 0 },
-    { name: "Fitness", Activity: 0 },
-    { name: "Crossfit", Activity: 0 },
-  ];
   const [training, setTraining] = useState([]);
 
   useEffect(() => {
@@ -31,6 +25,19 @@ const Statistics = () => {
     const data = getTraining.data;
     setTraining(data);
   };
+
+  const groupedActivities = _.groupBy(training, "activity");
+  const groupsArray = _.map(groupedActivities, (groupedActivity, key) => ({
+    activity: key,
+    customer: groupedActivity,
+  }));
+
+  const data = [];
+  groupsArray.map((item) => {
+    let totalDuration = 0;
+    item.customer.map((item) => (totalDuration += item.duration));
+    data.push({ name: item.activity, Activity: totalDuration });
+  });
 
   training.map((item) => {
     for (let i = 0; i < data.length; i++) {
