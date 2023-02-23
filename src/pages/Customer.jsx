@@ -18,11 +18,11 @@ const Customer = () => {
   const [modalStatus, setModalStatus] = useState(false);
 
   const [open, setOpen] = useState(false);
-  const [deleteUrl, setDeleteUrl] = useState(null);
+  const [cusId, setCusId] = useState(null);
 
-  const handleClickOpen = (url) => {
+  const handleClickOpen = (customerId) => {
     setOpen(true);
-    setDeleteUrl(url);
+    setCusId(customerId);
   };
 
   const handleClose = () => {
@@ -78,11 +78,18 @@ const Customer = () => {
       headerName: "Action",
       width: 150,
       sortable: false,
-      renderCell: (params) => (
-        <Button onClick={() => handleClickOpen(params.row.links[1].href)}>
-          Delete
-        </Button>
-      ),
+      renderCell: (params) => {
+        const url = params.row.links[1].href;
+        return (
+          <Button
+            onClick={() =>
+              handleClickOpen(url.slice(url.length - 3, url.length))
+            }
+          >
+            Delete
+          </Button>
+        );
+      },
     },
   ];
 
@@ -103,7 +110,9 @@ const Customer = () => {
   };
   const deleteCustomer = () => {
     try {
-      axios.delete(deleteUrl).then(() => getCustomerData());
+      axios
+        .delete(`https://traineeapp.azurewebsites.net/api/customers/${cusId}`)
+        .then(() => getCustomerData());
     } catch (error) {
       console.log(error);
     }
