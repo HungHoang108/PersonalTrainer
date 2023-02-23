@@ -20,6 +20,10 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { useNavigate } from "react-router-dom";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import HomeIcon from '@mui/icons-material/Home';
+import GroupsIcon from '@mui/icons-material/Groups';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 const drawerWidth = 240;
 
@@ -115,7 +119,7 @@ export default function SideBar() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              TRAINIO- Personal Trainer
+              TRAINIO Personal Trainer
             </Typography>
           </Toolbar>
         </AppBar>
@@ -152,11 +156,11 @@ export default function SideBar() {
                 >
                   <ListItemButton>
                     <ListItemIcon>
-                      {text === "Home" && <InboxIcon />}
+                      {text === "Home" && <HomeIcon />}
                       {text === "Training" && <FitnessCenterIcon />}
-                      {text === "Customer" && <InboxIcon />}
-                      {text === "Calendar" && <InboxIcon />}
-                      {text === "Statistics" && <InboxIcon />}
+                      {text === "Customer" && <GroupsIcon />}
+                      {text === "Calendar" && <CalendarMonthIcon />}
+                      {text === "Statistics" && <BarChartIcon />}
                     </ListItemIcon>
                     <ListItemText primary={text} />
                   </ListItemButton>

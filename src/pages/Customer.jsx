@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import dayjs from "dayjs";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
+
 import NewCustomerModal from "../components/NewCustomerModal";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -91,11 +91,15 @@ const Customer = () => {
   }, []);
 
   const getCustomerData = async () => {
-    const getCustomers = await axios.get(
-      "https://traineeapp.azurewebsites.net/api/customers"
-    );
-    const data = getCustomers.data.content;
-    setCustomers(data);
+    try {
+      const getCustomers = await axios.get(
+        "https://traineeapp.azurewebsites.net/api/customers"
+      );
+      const data = getCustomers.data.content;
+      setCustomers(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const deleteCustomer = () => {
     try {
@@ -103,7 +107,7 @@ const Customer = () => {
     } catch (error) {
       console.log(error);
     }
-    setOpen(false)
+    setOpen(false);
   };
 
   const processRowUpdate = async (newRow) => {

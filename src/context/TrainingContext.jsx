@@ -10,13 +10,16 @@ const TrainingProvider = ({ children }) => {
   }, []);
 
   const getTrainingData = async () => {
-    const getTraining = await axios.get(
-      "https://traineeapp.azurewebsites.net/gettrainings"
-    );
-    const data = getTraining.data;
-    setTraining(data);
+    try {
+      const getTraining = await axios.get(
+        "https://traineeapp.azurewebsites.net/gettrainings"
+      );
+      const data = getTraining.data;
+      setTraining(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
 
   const value = { training, getTrainingData };
 

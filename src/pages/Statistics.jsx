@@ -20,21 +20,14 @@ const Statistics = () => {
     activity: key,
     customer: groupedActivity,
   }));
-
+  
   const data = [];
   groupsArray.map((item) => {
     let totalDuration = 0;
-    item.customer.map((item) => (totalDuration += item.duration));
+    item.customer.map((item) => (totalDuration += Number(item.duration)));
     data.push({ name: item.activity, Activity: totalDuration });
   });
 
-  training.map((item) => {
-    for (let i = 0; i < data.length; i++) {
-      if (item.activity === data[i].name) {
-        data[i].Activity += Number(item.duration);
-      }
-    }
-  });
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Trainer's activity stats</h1>
