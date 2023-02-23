@@ -26,6 +26,17 @@ const Training = () => {
   };
   const columns = [
     {
+      field: "customer.id",
+      headerName: "Trainer Id",
+      width: 140,
+      editable: false,
+      sortable: true,
+      valueGetter: (params) =>
+        params.row.customer
+          ? `${params.row.customer.id || ""}`
+          : "null",
+    },
+    {
       field: "customer",
       headerName: "Full name",
       description: "This column has a value getter and is not sortable.",
@@ -42,7 +53,7 @@ const Training = () => {
     {
       field: "duration",
       headerName: "Duration (mins)",
-      width: 240,
+      width: 220,
       editable: true,
     },
     {
@@ -81,7 +92,7 @@ const Training = () => {
     {
       field: "actions",
       headerName: "Action",
-      width: 230,
+      width: 180,
       sortable: false,
       renderCell: (params) => {
         return (
