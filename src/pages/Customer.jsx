@@ -151,6 +151,7 @@ const Customer = () => {
         processRowUpdate={processRowUpdate}
         components={{ Toolbar: GridToolbar }}
         onProcessRowUpdateError={handleProcessRowUpdateError}
+        sx={{ mx: "auto", maxWidth: "80%" }}
       />
       <Dialog
         open={open}
