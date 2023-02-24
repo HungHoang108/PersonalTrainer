@@ -126,6 +126,8 @@ const Training = () => {
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
         components={{ Toolbar: GridToolbar }}
+        sx={{ mx: "auto", maxWidth: "80%" }} // add the sx prop here
+
       />
       <Dialog
         open={open}
