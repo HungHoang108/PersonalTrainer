@@ -1,6 +1,9 @@
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 
+Trainio is a personal training tracking app, which allows tracking customer's data, training activity like Gym, Zumba, Spinning, Jogging.
+The app also alow trainer to see training calendar and statistics of training activity.
+
 Live demo [link](https://trainio.netlify.app/).
 
 ## Features
