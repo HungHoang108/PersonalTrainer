@@ -6,6 +6,9 @@ The app also alow trainer to see training calendar and statistics of training ac
 
 Live demo [link](https://trainio.netlify.app/).
 
+## Techs
+- React, Material UI, Rest API, Lodash js, React-big-calendar, React router, Recharts
+
 ## Features
 - Read, create, delete training
 - Read, create, update, delete customers
